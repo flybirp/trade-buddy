@@ -134,12 +134,35 @@ agent_created: true
 
 ## 数据依赖
 
+### 客户端适配（先看这个，避免误判数据源缺失）
+
+数据源分两层。**在 Codex / CodeBuddy 等非 WorkBuddy 客户端上，A 层全部可用**——不要因为找不到同名 skill 就判定"本机没有数据 CLI"：
+
+**A 层 · 公开 CLI（任何有 Node.js ≥16 的环境直接跑，与客户端无关）**
+
+| 数据源 | 命令形态 | 说明 |
+|---|---|---|
+| westock | `npx -y westock-data-clawhub@1.0.4 <命令>` | 公开 npm 包（registry.npmjs.org，腾讯自选股团队维护）。WorkBuddy 的 `WeStock Data` skill 本质就是包着这个 CLI 的文档——**没有该 skill 不等于没有数据源** |
+| futu（可选） | `python3 scripts/futu_quote.py <命令>` | 随本 skill 发布；需 `pip install futu-api` + 本地 OpenD |
+
+**B 层 · WorkBuddy 环境专属 skill（Codex 上不存在，按右列降级）**
+
+| Skill（仅 WorkBuddy） | Codex / 其他客户端的替代 |
+|---|---|
+| `WeStock Data` | 直接跑 A 层 westock CLI（该 skill 内部就是这么实现的） |
+| `wb-finance-skill + agentic_search` | WebSearch / WebFetch 检索行业景气、同业候选 |
+| `tencent-news` | WebSearch 检索新闻与催化剂 |
+| `cninfo-stock-data` / `cninfo-filing-scraper` | WebFetch 巨潮资讯网（A股公告）/ 港交所披露易 HKEXnews（港股公告）；或 WebSearch 检索公告原文 |
+| `量能异动监控` | 用 westock `kline` 原始量价自行计算量比/振幅 |
+
+**禁止**因某数据源在当前客户端不可用而中断分析：降级到替代方案，并在「数据缺口」标注未交叉验证的部分。
+
 ### 核心数据
 
 | Skill/能力 | 用途 |
 |---|---|
 | `wb-finance-skill + agentic_search` | 行业景气、产业链、同业候选、市场环境、反向证据；委派必须是一句话高层意图 |
-| `WeStock Data` | 标的身份、日/周K、分时、技术指标、资金、龙虎榜、筹码、财务、股东、分红、业绩预告、板块 |
+| `WeStock Data`（即 westock CLI） | 标的身份、日/周K、分时、技术指标、资金、龙虎榜、筹码、财务、股东、分红、业绩预告、板块 |
 | `tencent-news` | 公司、行业与政策新闻，校验催化剂新鲜度 |
 | `cninfo-stock-data` | 巨潮公告主源：公告、定期报告、深市调研记录、原文链接/PDF |
 | `cninfo-filing-scraper` | 公告兜底：按代码、日期、类型过滤及原文核验 |
@@ -464,3 +487,4 @@ L3 必须进「待验证线索」表单独隔离，写明**与一手数据的矛
 - [ ] 概率是否由这两张表推导得出，而非直接给出
 - [ ] **两张表的「观测方式」列是否都填了**，且命令实际跑通过（这是 trade-watchdog 自动巡检的前提）
 - [ ] 查不到的指标是否诚实标注「人工:」或「不可观测:」，而非编造命令
+- [ ] **非 WorkBuddy 客户端上：是否直接用 `npx -y westock-data-clawhub@1.0.4` 取数，而非误判"本机没有 westock/cninfo CLI"后空转翻找**

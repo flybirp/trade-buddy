@@ -246,6 +246,17 @@ trade-buddy/
 
 **已知无效调用已列表固化**（`quote` 不可用、`search --sector` 对中文板块名无效、`reserve` 返回空壳、港股 `chip`/`lhb` 不支持、futu-api 会无限重连），避免重复踩坑。
 
+### 在 Codex / CodeBuddy 上数据源可用吗？
+
+**可用，而且不需要装任何东西。** 数据源分两层：
+
+- **公开 CLI 层（跨客户端通用）**：westock 的实体是公开 npm 包 `westock-data-clawhub@1.0.4`（registry.npmjs.org），只要本机有 Node.js ≥16，直接 `npx -y westock-data-clawhub@1.0.4 kline sz001270` 就能取数——K线、资金、财报、筹码、ETF、港股通持股全覆盖。**WorkBuddy 里的「WeStock Data」skill 只是这个 CLI 的文档壳，没有它 ≠ 没有数据源。**
+- **WorkBuddy 专属 skill 层（Codex 上没有，自动降级）**：`tencent-news` / `cninfo-stock-data` / `agentic_search` / `量能异动监控`。降级路径：新闻与行业检索 → WebSearch；A股公告 → WebFetch 巨潮资讯网；港股公告 → WebFetch 港交所披露易（HKEXnews）；量能 → westock `kline` 原始量价自行计算。降级取的数据在「数据缺口」标注未交叉验证。
+
+> 症状对照：如果你看到 agent 提示「本机没有预装的 westock/cninfo CLI」然后翻找插件缓存——那是误判，让它直接跑上面的 `npx` 命令即可。公告类接口在 Codex 上确实没有 CLI（cninfo 是 WorkBuddy 私有 skill），走 WebFetch 官网。
+
+可选的 futu 增强层：`pip install futu-api` + 本地 OpenD，随本仓库自带 `scripts/futu_quote.py`，先 `probe` 再调用，不可用自动跳过。
+
 ---
 
 ## 市场支持
