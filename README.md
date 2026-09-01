@@ -6,6 +6,10 @@
 
 它不是诊股器，不承诺预测准确，也不劝你买或卖。它做的是：**把「我觉得能涨」拆成一句话可证伪的命题，再用真实数据去支撑或推翻它**。
 
+![trade-buddy × trade-watchdog 协作关系与使用流程](overview.png)
+
+上图是完整生态：trade-buddy 负责深度分析、产出决策单；配套的 [trade-watchdog](https://github.com/flybirp/trade-watchdog) 负责定期巡检条件是否命中，无变化保持静默。
+
 ---
 
 ## 为什么需要它
