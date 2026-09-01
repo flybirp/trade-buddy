@@ -29,7 +29,17 @@ LLM 做投资分析有三个结构性缺陷，这个 skill 逐个堵：
 
 ### 安装
 
-**方式一：skills CLI（推荐，自动放到正确目录）**
+**方式一：一句话安装（最省事）**
+
+在 WorkBuddy / CodeBuddy / Codex 里直接把这句话发给 agent：
+
+```
+帮我安装这个 skill https://github.com/flybirp/trade-buddy.git
+```
+
+agent 会自动 clone 到你当前客户端的 skills 目录。按各客户端的安全策略，它可能先跑一遍安全审查，确认即可。装完**重启客户端**生效。
+
+**方式二：skills CLI**
 
 ```bash
 npx skills add flybirp/trade-buddy -g -y
@@ -41,7 +51,7 @@ npx skills add flybirp/trade-buddy -g -y
 ln -s ~/.agents/skills/trade-buddy ~/.workbuddy/skills/trade-buddy
 ```
 
-**方式二：git clone 到各客户端的 skills 目录**
+**方式三：git clone / 手动复制**
 
 ```bash
 # WorkBuddy
@@ -54,15 +64,23 @@ git clone https://github.com/flybirp/trade-buddy.git ~/.codebuddy/skills/trade-b
 git clone https://github.com/flybirp/trade-buddy.git ~/.codex/skills/trade-buddy
 ```
 
-**方式三：手动复制**
-
-把整个 `trade-buddy/` 目录（内含 `SKILL.md`、`references/`、`scripts/`、`templates/`）放进对应客户端的 `skills/` 下。**目录里必须有 `SKILL.md`**，否则不会被识别。
+手动复制同理：把整个 `trade-buddy/` 目录放进客户端的 `skills/` 下。**目录里必须有 `SKILL.md`**，否则不会被识别。
 
 可选依赖（仅在使用富途增强层时需要）：
 
 ```bash
 pip install futu-api
 ```
+
+### 安全性
+
+这个 skill **只有一个 Python 脚本**，且行为是只读的：
+
+- 不执行任意命令、不写文件、不删文件
+- 唯一网络出口是 `socket` 连接本机 `127.0.0.1:11111`（富途 OpenD），**不外传任何数据**
+- 不读取 SSH / 环境变量 / 凭据等敏感本机文件
+
+其余全部是 Markdown 文档。你可以让 agent 用 `skill-vetter` 之类的审查工具再验一遍。
 
 ### 验证安装
 
