@@ -84,11 +84,12 @@ pip install futu-api
 
 ### 验证安装
 
-重启客户端后，直接问一句：
+重启客户端后，用对应客户端的唤醒方式问一句：
 
-```
-/trade-buddy 帮我看下茅台现在能进吗
-```
+| 客户端 | 唤醒方式 |
+|---|---|
+| WorkBuddy | `/trade-buddy 帮我看下茅台现在能进吗` |
+| Codex | `$trade-buddy 帮我看下茅台现在能进吗` |
 
 能输出决策单即安装成功。如果客户端找不到这个 skill，检查 `SKILL.md` 的 frontmatter 是否完整（`name` + `description` 必填）。
 
@@ -97,7 +98,7 @@ pip install futu-api
 两种都行：
 
 - **直接说人话**：`帮我看下电广传媒，明天想买，赚 5 个点就走` —— 客户端会自动匹配
-- **显式调用**：`/trade-buddy 帮我看下电广传媒…`
+- **显式调用**：WorkBuddy 用 `/trade-buddy`，Codex 用 `$trade-buddy`
 
 **只有两个信息会向你追问**：持有期限、目标收益率。其余（标的身份、当前价、财务、公告、同业、板块）全部自己取数补全——不会问你能自己查到的东西。
 
