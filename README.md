@@ -234,8 +234,10 @@ trade-buddy/
 │   └── futu-datasource.md            富途增强层（需本地 OpenD）
 ├── scripts/
 │   └── futu_quote.py                 富途行情适配 CLI
-└── templates/
-    └── trade-decision-card.md        决策单模板
+├── templates/
+│   └── trade-decision-card.md        决策单模板
+└── assets/
+    └── logo-512.png                  技能头像（512×512）
 ```
 
 > reference 一律**按需加载**：开场只读 template，其余在对应阶段卡壳时才读。决策要点已内联进 SKILL.md。
