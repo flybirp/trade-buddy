@@ -1,5 +1,13 @@
 # trade-buddy
 
+<p align="center">
+  <img src="assets/logo-512.png" width="160" alt="trade-buddy logo">
+</p>
+
+<p align="center">
+  <b>交易搭档</b> · v1.0.0 · 分类：投资理财 · Author: flybirp
+</p>
+
 把自己一句模糊的买入想法，变成一张**可验证、可执行、可复盘**的交易决策单。
 
 > 研究员负责找逻辑，交易员负责定计划，风控负责限制亏损，复盘员负责迭代。

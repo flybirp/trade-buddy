@@ -1,8 +1,13 @@
 ---
 name: trade-buddy
 description: 交易搭档（不是考官）。当用户说要买/考虑买某只个股、问某只票能不能买、或要求分析某只标的时使用（如"我想明天买电广传媒"、"帮我看下XX"、"XX现在能进吗"）。用户给出个股+价格+日期+想赚几个点后，本 skill 会：①主动拉取真实数据（K线量价/资金/龙虎榜/筹码/财报/股东/新闻催化剂/板块/公告）；②判断交易命题、行业景气、公司地位和同业替代；③综合历史可达性与当前证据给出目标收益的达成/失败/横盘概率区间；④生成高开/平开/低开情景树与分仓方案；⑤默认输出为精简 Markdown（.md）的可验证、可执行、可复盘交易决策单。
-description_zh: 交易搭档
-description_en: Trade buddy
+display_name: 交易搭档
+display_name_en: Trade Buddy
+description_zh: 交易搭档（不是考官）——把一句模糊的买入想法变成可验证、可执行、可复盘的交易决策单。主动拉取真实行情/资金/财报/新闻数据，判断交易命题与同业替代，给出目标收益的达成概率区间，并生成高开/平开/低开情景树与分仓方案。内置技术面择时闸门与均线排列过滤，避免在超买区给出买点。
+description_en: Trade Buddy — turns a vague buy idea into a verifiable, executable and reviewable trade decision card. It pulls real market, fund-flow, financial and news data, judges the trade thesis and peer alternatives, estimates probability ranges for the target return, and produces a scenario tree with position sizing. Includes a technical timing gate (overbought filter and MA5/20/60 alignment check) so it never recommends entries in overbought zones.
+category: 投资理财
+version: 1.0.0
+author: flybirp
 disable: false
 agent_created: true
 ---
